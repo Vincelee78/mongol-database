@@ -1,6 +1,6 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-Welcome USER_NAME,
+Welcome Vincelee78,
 
 This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. The last update to this file was: **July 2, 2021**
 
@@ -99,4 +99,59 @@ Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` f
 
 ---
 
-Happy coding!
+<!-- #Mongo commands -->
+
+<!-- show all databases -->
+show databases
+
+<!-- set active bases -->
+use sample_airbnb
+
+<!-- to show all collections -->
+show collections
+
+
+<!-- show current database -->
+db
+
+<!-- to find all documents of a collection -->
+db<name of collection>.find()
+
+<!-- next 10 documents -->
+it
+
+<!-- to beautify  -->
+db<name of collection>.find().pretty
+
+<!-- projection -->
+display only certain keys from documents
+
+db.listingsAndReviews.find({},{
+    'name':1,
+    'address.country':1
+}).pretty()
+
+<!-- limit 5 -->
+db.listingsAndReviews.find({},{
+    'name':1,
+    'address.country':1
+}).pretty().limit(5)
+
+<!-- filtering -->
+<!-- find all listings with exactly 3 beds -->
+<!-- first criteria is 3 beds -->
+db.listingsAndReviews.find({
+    'beds':3 
+},{
+    'name':1,
+    'beds':1
+}).pretty()
+
+db.listingsAndReviews.find({
+    'beds':2,
+    'bedrooms':2
+},{
+    'name':1,
+    'beds':1,
+    'bedrooms':1
+}).pretty()
