@@ -225,3 +225,440 @@ db.listingsAndReviews.find({
     
 }).pretty()
 
+<!-- 2a -->
+db.companies.find({
+    'founded_year':2006
+},{
+    'name':1,
+    'founded_year':1
+    
+}).pretty()
+
+<!-- 2b -->
+db.companies.find({
+    'founded_year':{
+        $gt:2000
+    }
+},{
+    'name':1,
+    'founded_year':1
+    
+}).pretty()
+
+<!-- 2c -->
+
+db.companies.find({
+    'founded_year':{
+        $gte:1900,
+        $lte:2010
+    }
+},{
+    'name':1,
+    'founded_year':1
+    
+}).pretty()
+
+<!-- 3a -->
+
+db.companies.find({
+    'acquisition.price_amount':{
+        $gt:100000000
+        
+    }
+},{
+    'name':1,
+    'acquisition.price_amount':1,
+    'acquisition.price_currency_code':1
+
+    
+}).pretty()
+
+<!-- 3b -->
+
+db.companies.find({
+    'acquisition.price_amount':{
+        $gt:10000000   
+    },
+    'acquisition.price_currency_code': 'USD'
+},{
+    'name':1,
+    'acquisition.price_amount':1,
+    'acquisition.price_currency_code':1
+
+    
+}).pretty()
+
+<!-- slide 2.2 -->
+
+db.inspections.find({
+    'result': "Violation Issued"
+    
+},{
+    'business_name':1,
+    'result':1
+
+}).pretty()
+
+<!-- 2.3 -->
+db.inspections.find({
+    'address.city':"NEW YORK",
+    'result': "Violation Issued"
+    
+},{
+    'business_name':1,
+    'result':1,
+    'address.city':1
+
+}).pretty()
+
+<!-- 2.4 -->
+
+db.inspections.count({
+    'address.city':"NEW YORK",
+    
+
+})
+
+
+db.inspections.find({
+    'address.city':"NEW YORK",
+    
+
+}).count()
+
+<!-- 2.5 $ne --> 
+
+db.inspections.find({
+    'address.city': {
+        '$regex':'ridgewood',
+        '$options':'i'
+    },
+    'result': {
+        '$ne':"Violation Issued"
+    }
+}).count()
+
+<!-- 3.1 -->
+
+db.accounts.find({
+    'products': {
+        '$in':["InvestmentStock"]
+    }
+    },
+    {
+        'account_id':1,
+        'products':1
+
+    
+}).pretty()
+
+<!-- 3.2 -->
+db.accounts.find({
+    'products': {
+        '$all':["InvestmentStock","Commodity"]
+    }
+    },
+    {
+        'account_id':1,
+        'products':1
+
+    
+}).pretty()
+
+<!-- 3.3 -->
+
+db.accounts.find({
+    'products': {
+        '$in':["CurrencyService","Commodity"]
+    }
+    },
+    {
+        'account_id':1,
+        'products':1
+
+    
+}).pretty()
+
+<!-- 3.4 $nin(not included in array)-->
+
+db.accounts.find({
+    'products': {
+        '$nin':["CurrencyService"]
+    }
+    },
+    {
+        'account_id':1,
+        'products':1
+
+    
+}).pretty()
+
+<!-- 3.5 -->
+
+db.accounts.find({
+    'limit':{
+        $gt:1000
+    },
+    'products': {
+        '$all':["InvestmentStock","InvestmentFund"]
+    }
+    },
+    {
+        'account_id':1,
+        'products':1
+
+    
+})
+
+db.animals.insert({
+    'name': 'Fluffy',
+    'age': 3,
+    'breed':'golden'
+
+})
+
+db.students.insertMany([
+    {
+    'Name': 'Jane Doe',
+    'Age': 13,
+    'Subjects': ['Defense Against the Dark Arts', 'Charms', 'History of Magic'],
+    'Data Enrolled': ISODate('2016-05-13')
+},
+{
+    'Name': 'James Verses',
+    'Age': 14,
+    'Subjects': ['Transfiguration', 'Alchemy'],
+    'Data Enrolled': ISODate('2015-06-15')
+},
+{
+    'Name': 'Jonathan Goh',
+    'Age': 12,
+    'Subjects': ['Divination', 'Study of Ancient Runes'],
+    'Data Enrolled': ISODate('2017-04-16')
+
+}
+
+])
+
+db.students.find({
+
+    'Subjects':'Divination',
+},
+{
+    'Subjects':1,
+
+}).pretty()
+
+<!--  
+
+$set as the 2nd argument {
+    '$set':{
+    'age':1.5
+    }
+    }) -->
+
+    db.students.update({
+        "_id" : ObjectId("61444414a9aa7ede8d49acb7")
+    },
+    {
+        '$set':{
+            'status': 'living'
+        }
+    
+    })
+
+db.students.remove({
+    "_id" : ObjectId("61444414a9aa7ede8d49acb7")
+})
+
+db.students.update({
+        
+    },
+    {
+        '$set':{
+            'Age': +1
+        }
+    
+    })
+
+    db.students.update({
+        "_id" : ObjectId("61444414a9aa7ede8d49acb7")
+    },
+    {
+        '$set':{
+            'Data Enrolled': {
+                ISODate:('2018-05-13')
+
+                
+            }
+        }
+    
+    })
+
+    db.students.updateMany({
+    },
+    {
+        '$inc':{
+            'Age':1
+        }
+    })
+
+    db.students.update({
+        "_id" : ObjectId("61444414a9aa7ede8d49acb6")
+    },
+    {
+        '$set':{
+            'Age': 13
+                
+            }
+        
+    
+    })
+
+    db.students.find()
+
+    db.students.update({
+        "_id" : ObjectId("61444414a9aa7ede8d49acb5")
+    },
+    {
+        '$set':{
+            'Name': "Jane Doe Jr",
+            'Age':11
+    
+            }
+        
+    })
+
+    db.animals.insert({
+    'name':'Cookie',
+    'age': 3,
+    'breed':'Lab Retriever',
+    'type':'Dog',
+    'checkups':[]
+})
+
+db.animals.insertMany([{
+    
+    Name: 'Dash',
+    Age: 3,
+    Breed: 'Hamster',
+    Species: 'Hamster',
+     },
+    {
+    Name: 'Carrot',
+    Age: 1.5,
+    Breed: 'Australian Dwarf',
+    Species: 'Rabbit'
+
+    
+}])
+
+db.animals.update({
+    Name:'Carrot'
+},
+{
+    "Name" : "carrot", 
+    "age" : 1.5, 
+    "Breed" : "Australian Dwarf",
+    "Species" : "Rabbit"
+    
+
+})
+
+db.<collection.name>.drop()
+
+db.animals.update({
+    Name:'Dash'
+},
+{
+    "Name" : "Dash", 
+    "age" : 4.5, 
+    "Breed" : "Winter White",
+    "Species" : "Hamster"
+    
+
+})
+
+db.animals.remove({
+    Name:'Jorden'
+})
+
+db.accounts.update({
+    _id: ObjectId('5ca4bbc7a2dd94ee5816238d')
+},{
+    '$set':{
+        'products.0':'Stock',
+        'products.4':'stocks'
+        
+    
+    }
+
+})
+
+db.accounts.update({
+    _id:ObjectId('61445c757c693bd2f43fb7e2')
+}, {
+    '$push': {
+        'checkups': {
+            '_id':ObjectId(),
+            'name':'Dr Tan',
+            'diagnosis':'Diabetes',
+            'treatment':'Medication'
+        }
+    }
+})
+
+db.animals.find().pretty()
+
+db.animals.update({
+    _id:ObjectId('614467aa11a208cae4fea1a7')
+},{
+    '$push':{
+        'checkups': {
+            '_id':ObjectId(),
+            'name':'Dr Zhao',
+            'diagnosis':'Diabetes',
+            'treatment':'Medication'
+        }
+    }
+})
+
+
+})
+
+
+db.animals.update({
+    '_id': ObjectId('614467aa11a208cae4fea1a9')
+},{
+    '$set':{
+        'checkups.0.name':'Dr Su'
+    }
+
+})
+
+db.animals.updateMany({
+    'checkups': {
+        '$elemMatch':{
+            '$all':{
+                'name':['Dr Zhao']
+       
+         }
+         }
+    }
+},{
+    '$set':{
+        'checkups.$.name':'Dr Tan'
+    }
+
+})
+
+db.animals.update({
+    'checkups.id': ObjectId("614467aa11a208cae4fea1a8")
+}, {
+    '$set': {
+        'checkups.$.name':'Dr cdf',
+        'checkups.$.date': ISODate('2000-06-18')
+    }
+})
+
+mongo "mongodb+srv://cluster0.ii2xi.mongodb.net/" --username root
