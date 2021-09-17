@@ -33,7 +33,7 @@ To log into the Heroku toolbelt CLI:
 You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
 
 ------
-
+mongo "mongodb+srv://cluster0.ii2xi.mongodb.net/" --username root
 ## Release History
 
 We continually tweak and adjust this template to help give you the best experience. Here is the version history:
@@ -92,7 +92,7 @@ Yes, you can. Since no personally identifiable information is being captured, we
 pkill uptime.sh
 rm .vscode/uptime.sh
 ```
-
+mongo "mongodb+srv://cluster0.ii2xi.mongodb.net/" --username root
 **Anything more?**
 
 Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
@@ -109,6 +109,9 @@ use sample_airbnb
 
 <!-- to show all collections -->
 show collections
+
+<!-- clear the screen -->
+cls
 
 
 <!-- show current database -->
@@ -152,6 +155,73 @@ db.listingsAndReviews.find({
     'bedrooms':2
 },{
     'name':1,
-    'beds':1,
+    'address.country':1,
     'bedrooms':1
 }).pretty()
+
+<!-- search by a query key -->
+
+db.listingsAndReviews.find({
+    'beds':2,
+    'bedrooms':2,
+    'address.country':'Brazil'
+},{
+    'name':1,
+    'address.country':1,
+    'bedrooms':1
+}).pretty()
+
+<!-- $lt, $lte, $ne -->
+db.listingsAndReviews.find({
+    'beds': {
+        $gte:3
+    }
+},{
+    'name':1,
+    'address.country':1,
+    'beds':1
+}).pretty()
+
+<!--  any of them $in in amenities ARRAY it will shortlist-->
+
+db.listingsAndReviews.find({
+    'amenities': {
+        $in:['Oven,'Microwave']
+    }
+},{
+    'name':1,
+    'address.country':1,
+    'beds':1,
+    'amenities':1
+}).pretty()
+
+<!-- all of the items $all in amenities ARRAY -->
+
+db.listingsAndReviews.find({
+    'amenities': {
+        $all:['Oven,'Microwave']
+    }
+},{
+    'name':1,
+    'address.country':1,
+    'beds':1,
+    'amenities':1
+}).pretty()
+
+<!-- Select by objectID uses the sample_mflix database-->
+db.movies.find({
+    '_id':ObjectId('123123')
+}).pretty()
+
+<!-- regular expression -->
+<!-- find all the listings that has the word 'spacious' and $options is to ignore CAPS -->
+db.listingsAndReviews.find({
+    'name': {
+        '$regex':'spaciouS',
+        '$options':'i'
+    }
+},{
+    'name':1,
+    
+}).pretty()
+
